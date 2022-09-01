@@ -1,6 +1,6 @@
 from rest_framework import status
 from rest_framework.views import APIView
-from apps.users.api.serializers import UserSerializer
+from apps.users.api.serializers import UserSerializer,UserListSerializer
 from apps.users.models import User
 from rest_framework.response import Response
 
@@ -22,7 +22,7 @@ class UserAPIView(APIView):
 
         # Find all users without pk
         users = User.objects.all()
-        users_serializer = UserSerializer(users,many=True)
+        users_serializer = UserListSerializer(users,many=True)
         return Response(users_serializer.data, status=status.HTTP_200_OK)
 
     # Method to create user
