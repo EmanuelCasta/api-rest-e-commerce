@@ -191,7 +191,7 @@ class Product(BaseModel):
     # Products variables 
     name = models.CharField("Nombre de producto",max_length=150,unique=True,blank= False ,null=False)
     description = models.TextField("Descripcion del producto",blank = False,null = False)
-    material =  models.CharField('Nombre del material', max_length=100)
+    material =  models.CharField('Nombre del material de producto', max_length=100)
     
 
     # Foreing keys
@@ -199,6 +199,7 @@ class Product(BaseModel):
     collection = models.ForeignKey(Collection, on_delete=models.CASCADE,verbose_name="Coleccion del producto")
     business = models.ForeignKey(Business, on_delete=models.CASCADE,verbose_name="Empresa del producto")
     reference = models.ForeignKey(Reference, on_delete=models.CASCADE,verbose_name="Referencia del producto")
+    image = models.ImageField('Imagen del Producto', upload_to='products/', blank=True, null=True)
 
 
     historical = HistoricalRecords()
@@ -230,6 +231,7 @@ class Size_Product(BaseModel):
         self.changed_by = value
 
     class Meta: 
+        unique_together = ("product","size")
         verbose_name = "Size_Product"
         verbose_name_plural = "Size_Products"
 
@@ -248,6 +250,7 @@ class Color_Product(BaseModel):
         self.changed_by = value
 
     class Meta: 
+        unique_together = ("product","color")
         verbose_name = "Color_Product"
         verbose_name_plural = "Color_Products"
 
@@ -258,7 +261,7 @@ class Business_Product(BaseModel):
     discount = models.PositiveSmallIntegerField(default=0)
     date =  models.DateTimeField(auto_now_add=True)
     qualification = models.PositiveSmallIntegerField(default=0)
-    count_qualification = models.DecimalField('Cantidad de calificaciones', max_digits=10, decimal_places=2, default=0)
+    count_qualification = models.PositiveSmallIntegerField(default=0)
     
 
     # Foreing keys
@@ -280,13 +283,15 @@ class Business_Product(BaseModel):
     class Meta: 
         verbose_name = "Business_Product"
         verbose_name_plural = "Business_Products"
+    
+  
 
 
 class Sex_Business(BaseModel):
  
     # Foreing keys
     businnes_producto = models.ForeignKey(Business_Product, on_delete=models.CASCADE,verbose_name="Empresa venta del producto")
-    sex = models.ForeignKey(Sex, on_delete=models.CASCADE,verbose_name="Empresa que vende el producto")
+    sex = models.ForeignKey(Sex, on_delete=models.CASCADE,verbose_name="Sexo como se vende el producto")
     
 
     historical = HistoricalRecords()
@@ -300,6 +305,7 @@ class Sex_Business(BaseModel):
         self.changed_by = value
 
     class Meta: 
+        unique_together = ("businnes_producto","sex")
         verbose_name = "Sex_Busines"
         verbose_name_plural = "Sex_Business"
 

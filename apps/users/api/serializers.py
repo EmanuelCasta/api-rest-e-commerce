@@ -12,10 +12,15 @@ class UserSerializer(serializers.ModelSerializer):
     def validate(self, data):   
 
         for key, value in data.items():
-            if key != "password" :
+
+            if  key != "last_login" and key != "password" and key != "groups" and key != "user_permissions":
+
+
                 for restriction in self.restrictions:
+
                     if restriction in str(value) or str(value).startswith(" "):
-                        raise serializers.ValidationError(f"Cannot contain special characters in the field {restriction}")
+
+                        raise serializers.ValidationError(f"Cannot contain special characters in the field {key}: {value}")
                     
         return data
 
@@ -39,13 +44,14 @@ class UserListSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         #Futura empresa
         return {
-            "Id": instance.id,
+            "id": instance.id,
             "username" : instance.username,
             "email":instance.email,
             "name": instance.name,
             "last_name": instance.last_name,
             "image" : (instance.image if not hasattr(instance, 'image')  else None) ,
-            "password": instance.password
+            "password": instance.password,
+            "last_login":instance.last_login
         }
 
 """

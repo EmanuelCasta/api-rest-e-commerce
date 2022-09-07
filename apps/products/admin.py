@@ -15,4 +15,5 @@ admin.site.register(Size_Product)
 admin.site.register(Color_Product)
 admin.site.register(Business_Product)
 admin.site.register(Sex_Business)
+admin.site.register(Sex)
 

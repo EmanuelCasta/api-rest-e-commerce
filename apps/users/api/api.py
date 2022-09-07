@@ -47,6 +47,7 @@ class UserAPIView(APIView):
     # Update user 
     def put(self,request,pk):
         user = User.objects.filter(id=pk).first()
+        print(pk,"===============================================")
         if user:
             user_serializer = UserSerializer(user,data=request.data)
             if user_serializer.is_valid():
