@@ -1,49 +1,34 @@
 from rest_framework import generics
-from apps.products.api.serializers.general_serializers import BusinessSerializer,CollectionSerializer,ColorSerializer,CategorySerializer,CountrySerializer,IndicatorSerializer,ReferenceSerializer,SexSerializer,SizeSerializer
-from apps.base.api import GeneralListApiView
 
-class BusinessListAPIView(GeneralListApiView):
-    
+from apps.products.api.serializers.general_serializers import BusinessSerializer,CollectionSerializer,ColorSerializer,CategorySerializer,CountrySerializer,IndicatorSerializer,ReferenceSerializer,SexSerializer,SizeSerializer
+from apps.base.api import GeneralListCreateApiView
+
+
+
+# =====================  Crear Productos o listar ["GET", "POST"]==========================
+class BusinessListCreateAPIView(GeneralListCreateApiView): 
     serializer_class = BusinessSerializer
 
-    
-class ColorListAPIView(GeneralListApiView):
-    
+class ColorListCreateAPIView(GeneralListCreateApiView): 
     serializer_class = ColorSerializer
 
-
-class CollectionListAPIView(GeneralListApiView):
-    
+class CollectionListCreateAPIView(GeneralListCreateApiView): 
     serializer_class = CollectionSerializer
 
-
-class IndicatorListAPIView(GeneralListApiView):
-    
+class IndicatorListCreateAPIView(GeneralListCreateApiView):  
     serializer_class = IndicatorSerializer
 
-
-class SexListAPIView(GeneralListApiView):
-    
+class SexListCreateAPIView(GeneralListCreateApiView):  
     serializer_class = SexSerializer
 
-class CategoryListAPIView(GeneralListApiView):
-    
+class CategoryListCreateAPIView(GeneralListCreateApiView):
     serializer_class = CategorySerializer
 
-
-class CountryListAPIView(GeneralListApiView):
-    
+class CountryListCreateAPIView(GeneralListCreateApiView):
     serializer_class = CountrySerializer
-
-    
-
-class SizeListAPIView(GeneralListApiView):
-    
+  
+class SizeListCreateAPIView(GeneralListCreateApiView):
     serializer_class = SizeSerializer
 
-
-
-class ReferenceListAPIView(GeneralListApiView):
-    
+class ReferenceListCreateAPIView(GeneralListCreateApiView):
     serializer_class = ReferenceSerializer
-

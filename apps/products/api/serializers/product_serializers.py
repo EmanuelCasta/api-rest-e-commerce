@@ -6,14 +6,28 @@ from apps.products.api.serializers.general_serializers import  SexSerializer
 
 
 class ProductSerializer(serializers.ModelSerializer):
-    category = serializers.StringRelatedField()
-    collection = serializers.StringRelatedField()
+    """category = serializers.StringRelatedField()
+    collection = serializers.StringRelatedField(many=True)
     business = serializers.StringRelatedField()
-    reference = serializers.StringRelatedField()
-    
+    reference = serializers.StringRelatedField()"""
+  
     class Meta:
         model = Product
         exclude = ("state","modified_date","deleted_date","created_date")
+
+
+    def to_representation(self, instance):
+        return {
+            "id": instance.id,
+            "name" : instance.name,
+            "description" : instance.description,
+            "material": instance.material,
+
+            "category" :instance.category.name,
+            "collection" :instance.collection.name,
+            "business" :instance.business.name,
+            "reference" :instance.reference.name,
+        }
 
 
 class Business_ProductSerializer(serializers.ModelSerializer):
@@ -25,7 +39,7 @@ class Business_ProductSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         return {
             # Se llama la variable de ese modelo y luego se llama la variable del otro modelo
-             "id": 1,
+            "id": instance.id,
             "price": instance.price,
             "discount": instance.discount/100,
             "date": instance.date,
@@ -45,7 +59,7 @@ class Business_Product_ShowSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         return {
             # Se llama la variable de ese modelo y luego se llama la variable del otro modelo
-             "id": 1,
+            "id": instance.id,
             "price": instance.price,
             "discount": instance.discount/100,
             "date": instance.date,
@@ -78,13 +92,29 @@ class Sex_BusinessSerializer(serializers.ModelSerializer):
 
 class Color_ProductSerializer(serializers.ModelSerializer):
 
+
+
     class Meta:
         model = Color_Product
         exclude = ("state","modified_date","deleted_date","created_date")
+
+    def to_representation(self, instance):
+        return {
+            "id": instance.id,
+            "product": instance.product.name,
+            "color": instance.color.name,
+        }
 
 class Size_ProductSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Size_Product
         exclude = ("state","modified_date","deleted_date","created_date")
+    
+    def to_representation(self, instance):
+        return {
+            "id": instance.id,
+            "product": instance.product.name,
+            "color": instance.size.description,
+        }
 

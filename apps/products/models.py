@@ -213,8 +213,11 @@ class Product(BaseModel):
         self.changed_by = value
 
     class Meta: 
+        unique_together = ("reference",)
         verbose_name = "Product"
         verbose_name_plural = "Productos"
+    
+    
 
 class Size_Product(BaseModel):
 
