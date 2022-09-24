@@ -7,6 +7,7 @@ This file deals with the configuration of the application.
 
 """
 
+from datetime import timedelta
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -34,17 +35,21 @@ BASE_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    
 ]
 
 LOCAL_APPS=[
     'apps.base',
     'apps.users',
-    'apps.products'
+    'apps.products',
 ]
 
 THIRD_APPS = [
     "rest_framework",
-    "simple_history"
+    "simple_history",
+    "rest_framework_simplejwt",
+    "rest_framework.authtoken"
+   
 ]
 
 INSTALLED_APPS = BASE_APPS + LOCAL_APPS + THIRD_APPS
@@ -62,6 +67,8 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = "ecommerce_rest.urls"
 
+
+
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
@@ -77,6 +84,15 @@ TEMPLATES = [
         },
     },
 ]
+
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES":[
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+    #"DEFAULT_PERMISSION_CLASSES":[
+    #    "rest_framework.permissions.IsAuthenticated"
+    #]
+}
 
 WSGI_APPLICATION = "ecommerce_rest.wsgi.application"
 
@@ -98,7 +114,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = "UTC"
+TIME_ZONE = "America/Bogota"
 
 USE_I18N = True
 
@@ -106,11 +122,19 @@ USE_TZ = True
 
 AUTH_USER_MODEL = "users.User"
 
+
+
+
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = "static/"
 
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME":timedelta(minutes=60),
+    "REFRESH_TOKEN_LIFETIME":timedelta(minutes=60),
+}
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field

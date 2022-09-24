@@ -23,10 +23,10 @@ class ProductSerializer(serializers.ModelSerializer):
             "description" : instance.description,
             "material": instance.material,
 
-            "category" :instance.category.name,
-            "collection" :instance.collection.name,
-            "business" :instance.business.name,
-            "reference" :instance.reference.name,
+            "category" :instance.category.name if instance.category.name is not None else 'Verificar Backend o hablar con desarrollador para el problema',
+            "collection" :instance.collection.name if instance.collection.name is not None else 'Verificar Backend o hablar con desarrollador para el problema',
+            "business" :instance.business.name if instance.business.name is not None else 'Verificar Backend o hablar con desarrollador para el problema',
+            "reference" :instance.reference.name if instance.reference.name is not None else 'Verificar Backend o hablar con desarrollador para el problema',
         }
 
 
@@ -70,7 +70,7 @@ class Business_Product_ShowSerializer(serializers.ModelSerializer):
             "business_product": instance.product.business.name,
             "country": instance.country.name,
             "category": instance.product.category.name,
-            "collection": instance.product.collection.name,
+            "collection": instance.product.collection.name ,
             
         }
         
@@ -115,6 +115,6 @@ class Size_ProductSerializer(serializers.ModelSerializer):
         return {
             "id": instance.id,
             "product": instance.product.name,
-            "color": instance.size.description,
+            "size": instance.size.description,
         }
 

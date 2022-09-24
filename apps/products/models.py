@@ -3,6 +3,31 @@ from apps.base.models import BaseModel
 from simple_history.models import HistoricalRecords
 # Create your models here.
 
+
+"""
+class PermissionUserMember(BaseModel):
+    # Se crea los permisos ahi mismo que se obtiene la subscricion
+    email = models.EmailField('Correo Electrónico',max_length = 255, unique = True)
+    historical = HistoricalRecords()
+    expiration_date= models.DateTimeField(blank=False)
+    # tOKEN TENDRA si es pro o personalizada
+    token = models.CharField('token para ingresar', max_length = 255, unique=True)
+
+    @property
+    def _history_user(self):
+        return self.changed_by
+
+    @_history_user.setter
+    def _history_user(self,value):
+        self.changed_by = value
+
+    class Meta: 
+        verbose_name = "PermissionUserMember"
+        verbose_name_plural = "PermissionUserMembers"
+
+    def __str__(self) -> str:
+        return self.email"""
+
 class Collection(BaseModel):
     
     name = models.CharField("Nombre coleccion", max_length=50,blank=True,null=False, unique=True)
@@ -311,6 +336,7 @@ class Sex_Business(BaseModel):
         unique_together = ("businnes_producto","sex")
         verbose_name = "Sex_Busines"
         verbose_name_plural = "Sex_Business"
+
 
 
 

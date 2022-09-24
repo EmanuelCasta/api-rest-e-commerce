@@ -1,5 +1,16 @@
 from rest_framework import serializers
-from apps.users.models import User
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+
+from apps.users.models import User,Subscription,Membership
+
+class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
+    pass
+
+class CustomUserSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = ("id","username","email","name","last_name")
 
 class UserSerializer(serializers.ModelSerializer):
 
@@ -53,6 +64,27 @@ class UserListSerializer(serializers.ModelSerializer):
             "password": instance.password,
             "last_login":instance.last_login
         }
+
+class SubscriptionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Subscription
+        exclude = ("state","created_date", "modified_date","deleted_date")
+
+    def to_representation(self, instance):
+        return {
+            "id": instance.id,
+            "count_sub": instance.count_sub,
+            "count_sub_total": instance.count_sub_total,
+            "proof_of_payment": instance.proof_of_payment,
+            "expiration_date": instance.expiration_date,
+            "membership": instance.membership.membership_type,
+            "user": instance.user.email
+        }
+
+class MembershipSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Membership
+        exclude = ("state","created_date", "modified_date","deleted_date")
 
 """
 class TestUserSerializers(serializers.Serializer):

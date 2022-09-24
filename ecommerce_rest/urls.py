@@ -15,9 +15,22 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+
+)
+
+from apps.users.views import *
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("usuario/",include("apps.users.api.urls")),
-    path("products-nike/",include("apps.products.api.urls"))
+    path('logout/', Logout.as_view(), name='Logout'),# Sirve para refrescar el token que sirven para acceder 
+    path('login/', Login.as_view(), name='Login'),# retornar el token de acceso y el token de refresco de cada usuario
+    #path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),# retornar el token de acceso y el token de refresco de cada usuario
+    #path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),# Sirve para refrescar el token que sirven para acceder 
+    #path("products-nike-webScraping/",include("apps.products.api.urls")),
+    path("products_nike/",include("apps.products.api.routers")),
+    path("products-puma/",include("apps.products.api.urls")),
 ]

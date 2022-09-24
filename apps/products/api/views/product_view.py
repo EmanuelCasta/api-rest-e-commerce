@@ -1,8 +1,8 @@
-from rest_framework import status
+from rest_framework import status,viewsets
 from rest_framework.response import Response
 from rest_framework import generics
 
-from apps.base.api import GeneralDestroyAPIView, GeneralListApiView, GeneralRetrieveAPIView,GeneralUpdateAPIView,GeneralListCreateApiView
+from apps.base.api import GeneralListApiView,GeneralListCreateApiView,GeneralRetrieveUpdateDestroyAPIView
 from apps.products.api.serializers.product_serializers import *
 from apps.products.models import Business_Product
 
@@ -42,16 +42,27 @@ class Size_ProductListCreateAPIView(GeneralListCreateApiView):
 class Business_ProductListCreateAPIView(GeneralListCreateApiView):
     serializer_class = Business_ProductSerializer
 
-# ============================== Obtener una formacion con pk ==============================
-class ProductRetrieveAPIView(GeneralRetrieveAPIView):
+# ============================== Obtener una formacion con pk,Eliminar un dato ,Actualizar un dato ==============================
+class ProductRetrieveUpdateDestroyAPIView(GeneralRetrieveUpdateDestroyAPIView):
     serializer_class = ProductSerializer
 
-# ================================ Eliminar un dato =======================================
-class ProductDestroyAPIView(GeneralDestroyAPIView):
-    serializer_class = ProductSerializer
+class  Sex_BusinessRetrieveUpdateDestroyAPIView(GeneralRetrieveUpdateDestroyAPIView):
+    serializer_class = Sex_BusinessSerializer
 
-# ================================ Actualizar un dato ========================================
-class ProductUpdateAPIView(GeneralUpdateAPIView):
-    serializer_class = ProductSerializer
- 
+class Color_ProductRetrieveUpdateDestroyAPIView(GeneralRetrieveUpdateDestroyAPIView):
+    serializer_class = Color_ProductSerializer
+
+class Size_ProductRetrieveUpdateDestroyAPIView(GeneralRetrieveUpdateDestroyAPIView):
+    serializer_class = Size_ProductSerializer
+
+class Business_ProductRetrieveUpdateDestroyAPIView(GeneralRetrieveUpdateDestroyAPIView):
+    serializer_class = Business_ProductSerializer
+
+
+
+
+
+  
+
+
 

@@ -16,6 +16,16 @@ DATABASES = {
 }
 
 
+# Pasarela de pagos DEBUG
+if DEBUG:
+    STRIPE_PUBLISHABLE_KEY = ""
+    STRIPE_SECRET_KEY = ""
+else: 
+    STRIPE_PUBLISHABLE_KEY = ""
+    STRIPE_SECRET_KEY = ""
+
+
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
