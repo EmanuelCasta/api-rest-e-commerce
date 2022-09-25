@@ -5,6 +5,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+import django_heroku
+django_heroku.settings(locals())
+
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 """
