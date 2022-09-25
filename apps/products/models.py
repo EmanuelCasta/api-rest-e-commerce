@@ -31,15 +31,7 @@ class PermissionUserMember(BaseModel):
 class Collection(BaseModel):
     
     name = models.CharField("Nombre coleccion", max_length=50,blank=True,null=False, unique=True)
-    historical = HistoricalRecords()
-
-    @property
-    def _history_user(self):
-        return self.changed_by
-
-    @_history_user.setter
-    def _history_user(self,value):
-        self.changed_by = value
+    
 
     class Meta: 
         verbose_name = "Collection"
@@ -52,15 +44,7 @@ class Collection(BaseModel):
 class Category(BaseModel):
     
     name = models.CharField("Nombre categoria", max_length=50,blank=True,null=False, unique=True)
-    historical = HistoricalRecords()
-
-    @property
-    def _history_user(self):
-        return self.changed_by
-
-    @_history_user.setter
-    def _history_user(self,value):
-        self.changed_by = value
+   
 
     class Meta: 
         verbose_name = "Category"
@@ -73,15 +57,7 @@ class Indicator(BaseModel):
 
     discount = models.PositiveSmallIntegerField(default=10)
     category = models.ForeignKey(Category, on_delete=models.CASCADE,verbose_name="Indicador de oferta")
-    historical = HistoricalRecords()
-
-    @property
-    def _history_user(self):
-        return self.changed_by
-
-    @_history_user.setter
-    def _history_user(self,value):
-        self.changed_by = value
+    
 
     class Meta: 
         verbose_name = "Indicator"
@@ -93,15 +69,7 @@ class Indicator(BaseModel):
 class Country(BaseModel):
 
     name = models.CharField("Nombre del pais", max_length=50,blank=True,null=False, unique=True)
-    historical = HistoricalRecords()
-
-    @property
-    def _history_user(self):
-        return self.changed_by
-
-    @_history_user.setter
-    def _history_user(self,value):
-        self.changed_by = value
+    
 
     class Meta: 
         verbose_name = "Country"
@@ -113,15 +81,7 @@ class Country(BaseModel):
 class Color(BaseModel):
 
     name = models.CharField("Nombre del color", max_length=50,blank=True,null=False, unique=True)
-    historical = HistoricalRecords()
-
-    @property
-    def _history_user(self):
-        return self.changed_by
-
-    @_history_user.setter
-    def _history_user(self,value):
-        self.changed_by = value
+   
 
     class Meta: 
         verbose_name = "Color"
@@ -133,15 +93,7 @@ class Color(BaseModel):
 class Business(BaseModel):
 
     name = models.TextField("Nombre de la empresa",blank=True,null=False, unique=True)
-    historical = HistoricalRecords()
-
-    @property
-    def _history_user(self):
-        return self.changed_by
-
-    @_history_user.setter
-    def _history_user(self,value):
-        self.changed_by = value
+    
 
     class Meta: 
         verbose_name = "Business"
@@ -154,15 +106,7 @@ class Business(BaseModel):
 class Size(BaseModel):
 
     description = models.CharField("Descripcion de medida o talla",max_length=50,blank = False,null = False,unique=True)
-    historical = HistoricalRecords()
-
-    @property
-    def _history_user(self):
-        return self.changed_by
-
-    @_history_user.setter
-    def _history_user(self,value):
-        self.changed_by = value
+   
 
     class Meta: 
         verbose_name = "Size"
@@ -174,15 +118,7 @@ class Size(BaseModel):
 class Sex(BaseModel):
 
     name = models.TextField("Genero",blank = False,null = False,unique=True)
-    historical = HistoricalRecords()
-
-    @property
-    def _history_user(self):
-        return self.changed_by
-
-    @_history_user.setter
-    def _history_user(self,value):
-        self.changed_by = value
+    
 
     class Meta: 
         verbose_name = "Sex"
@@ -194,15 +130,7 @@ class Sex(BaseModel):
 class Reference(BaseModel):
 
     name = models.TextField("Referencia/modelo",blank = False,null = False,unique=True)
-    historical = HistoricalRecords()
-
-    @property
-    def _history_user(self):
-        return self.changed_by
-
-    @_history_user.setter
-    def _history_user(self,value):
-        self.changed_by = value
+    
 
     class Meta: 
         verbose_name = "Reference"
@@ -227,15 +155,7 @@ class Product(BaseModel):
     image = models.ImageField('Imagen del Producto', upload_to='products/', blank=True, null=True)
 
 
-    historical = HistoricalRecords()
-
-    @property
-    def _history_user(self):
-        return self.changed_by
-
-    @_history_user.setter
-    def _history_user(self,value):
-        self.changed_by = value
+   
 
     class Meta: 
         unique_together = ("reference",)
@@ -248,15 +168,7 @@ class Size_Product(BaseModel):
 
     product = models.ForeignKey(Product, on_delete=models.CASCADE,verbose_name="Productos")
     size = models.ForeignKey(Size, on_delete=models.CASCADE,verbose_name="Talla")
-    historical = HistoricalRecords()
-
-    @property
-    def _history_user(self):
-        return self.changed_by
-
-    @_history_user.setter
-    def _history_user(self,value):
-        self.changed_by = value
+    
 
     class Meta: 
         unique_together = ("product","size")
@@ -267,15 +179,7 @@ class Color_Product(BaseModel):
 
     product = models.ForeignKey(Product, on_delete=models.CASCADE,verbose_name="Productos")
     color = models.ForeignKey(Color, on_delete=models.CASCADE,verbose_name="Color")
-    historical = HistoricalRecords()
-
-    @property
-    def _history_user(self):
-        return self.changed_by
-
-    @_history_user.setter
-    def _history_user(self,value):
-        self.changed_by = value
+    
 
     class Meta: 
         unique_together = ("product","color")
@@ -298,15 +202,6 @@ class Business_Product(BaseModel):
     country = models.ForeignKey(Country, on_delete=models.CASCADE,verbose_name="Pais")
 
 
-    historical = HistoricalRecords()
-
-    @property
-    def _history_user(self):
-        return self.changed_by
-
-    @_history_user.setter
-    def _history_user(self,value):
-        self.changed_by = value
 
     class Meta: 
         verbose_name = "Business_Product"
@@ -321,16 +216,6 @@ class Sex_Business(BaseModel):
     businnes_producto = models.ForeignKey(Business_Product, on_delete=models.CASCADE,verbose_name="Empresa venta del producto")
     sex = models.ForeignKey(Sex, on_delete=models.CASCADE,verbose_name="Sexo como se vende el producto")
     
-
-    historical = HistoricalRecords()
-
-    @property
-    def _history_user(self):
-        return self.changed_by
-
-    @_history_user.setter
-    def _history_user(self,value):
-        self.changed_by = value
 
     class Meta: 
         unique_together = ("businnes_producto","sex")

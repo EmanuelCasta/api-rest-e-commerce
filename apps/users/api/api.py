@@ -6,6 +6,7 @@ from rest_framework import viewsets
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from rest_framework import  viewsets
+from rest_framework.permissions import IsAuthenticated
 
 from apps.users.api.serializers import UserSerializer,UserListSerializer,MembershipSerializer,SubscriptionSerializer
 from apps.base.api import GeneralListApiView,GeneralViewSetAPIViewLIMIT
@@ -14,28 +15,11 @@ from apps.base.api import GeneralListApiView,GeneralViewSetAPIViewLIMIT
 class MemberListAPIVIEW(GeneralListApiView):
     serializer_class = MembershipSerializer
 
-
 class SubcriptionsViewSet(GeneralViewSetAPIViewLIMIT):
     serializer_class = SubscriptionSerializer
 
-
-class UserViewSet(viewsets.GenericViewSet):
+class UserRegisterViewSet(viewsets.GenericViewSet):
     serializer_class =UserSerializer
-    list_serializer_class = UserListSerializer 
-    #serializer_class_sub = SubscriptionSerializer
-
-    def get_object(self,pk):
-        return get_object_or_404(self.serializer_class.Meta.model,pk=pk)
-
-    def get_queryset(self):
-        if self.queryset is  None:
-            self.queryset = self.serializer_class().Meta.model.objects.filter(is_active=True)
-        return self.queryset
-
-    def list(self,request):
-        users = self.get_queryset()
-        users_serializer = self.list_serializer_class(users,many=True)
-        return Response(users_serializer.data,status=status.HTTP_200_OK)
 
     def create(self,request):
         user = self.serializer_class(data=request.data)
@@ -45,13 +29,41 @@ class UserViewSet(viewsets.GenericViewSet):
             return Response({"message":"Usuario registrado"},status=status.HTTP_200_OK)
         return Response({"message":"Error de usuario registrado","error":user.errors},status=status.HTTP_200_OK)
 
+    
+
+class UserViewSet(viewsets.GenericViewSet):
+    serializer_class =UserSerializer
+    #list_serializer_class = UserListSerializer 
+    permission_classes = (IsAuthenticated,)
+
+    def get_object(self,pk):
+        return get_object_or_404(self.serializer_class.Meta.model,pk=pk)
+
+    def get_queryset(self):
+        if self.queryset is  None:
+            self.queryset = self.serializer_class().Meta.model.objects.filter(is_active=True)
+        return self.queryset
+
+    """
+    def list(self,request):
+        users = self.get_queryset()
+        users_serializer = self.list_serializer_class(users,many=True)
+        return Response(users_serializer.data,status=status.HTTP_200_OK)"""
+    
+    
+
     def retrieve(self,request,pk=None):
-        user= self.get_object(pk)
+        if str(request.user.id) != str(pk):
+            return Response({"ERROR FATAL":"Se intenta acceder a otra cuentas"})
+        user= self.get_object(request.user.id)
+
         user_serializer = self.serializer_class(user)
         return Response(user_serializer.data)
 
     def update(self,request,pk=None):
-        user = self.get_object(pk)
+        if str(request.user.id) != str(pk):
+            return Response({"ERROR FATAL":"Se intenta actualizar la cuenta"})
+        user = self.get_object(request.user.id)
         if user:
             user_serializer = self.serializer_class(user,data=request.data)
             if user_serializer.is_valid():
@@ -61,7 +73,9 @@ class UserViewSet(viewsets.GenericViewSet):
         return Response({"message":"Not found user"},status=status.HTTP_304_NOT_MODIFIED)
     
     def destroy(self,request,pk=None):
-        user_destroy = self.serializer_class().Meta.model.objects.filter(id=pk).update(is_active=True)
+        if str(request.user.id) != str(pk):
+            return Response({"ERROR FATAL":"Se intenta eliminar la cuenta"})
+        user_destroy = self.serializer_class().Meta.model.objects.filter(id=pk).update(is_active=False)
         if user_destroy == 1:
             return Response({"message":"Usuario eliminado correctamente"})
         return Response({"message":"Usuario no existe"})

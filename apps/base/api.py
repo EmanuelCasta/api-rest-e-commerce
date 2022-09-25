@@ -80,7 +80,7 @@ class GeneralViewSetAPIView(viewsets.ModelViewSet):
 
     def check_subs_databases(self,timeExpiration,type,request):
         if type != "Free":
-            if timeExpiration>= timezone.now():  
+            if timeExpiration>= timezone.now() :  
                 return True
             else:
                 print("=======================2")
