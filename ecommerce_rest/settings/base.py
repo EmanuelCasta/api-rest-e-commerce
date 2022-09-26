@@ -129,13 +129,9 @@ import os
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = "static/"
-STATIC_URL = '/static/'
-STATIC_DIR = os.path.join(BASE_DIR, 'static')
-STATICFILES_DIRS = [
+STATIC_URL = ["static/","static/rest_framework/css/bootstrap-theme.min.css.map","static/rest_framework/css/bootstrap.min.css.map"]
 
-    os.path.join(BASE_DIR, "static")
-]
+
 
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME":timedelta(minutes=60),
