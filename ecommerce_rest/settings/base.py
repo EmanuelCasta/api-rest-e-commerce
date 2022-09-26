@@ -129,7 +129,7 @@ import os
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = ["static/","static/rest_framework/css/bootstrap-theme.min.css.map","static/rest_framework/css/bootstrap.min.css.map"]
+STATIC_URL = "static/"
 
 
 
