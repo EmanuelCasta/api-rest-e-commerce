@@ -48,13 +48,15 @@ THIRD_APPS = [
     "rest_framework",
     "simple_history",
     "rest_framework_simplejwt",
-    "rest_framework.authtoken"
+    "rest_framework.authtoken",
+    "corsheaders",
    
 ]
 
 INSTALLED_APPS = BASE_APPS + LOCAL_APPS + THIRD_APPS
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -122,7 +124,20 @@ USE_TZ = True
 
 AUTH_USER_MODEL = "users.User"
 
+"""
+CORS_ALLOWED_ORIGINS = [
+    "https://example.com",
+    "https://sub.example.com",
+    "http://localhost:8080",
+    "http://127.0.0.1:9000",
+]
 
+CORS_ORIGIN_WHITELIST =[
+
+]"""
+
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ORIGIN_ALLOW_ALL = True
 
 import os
 
