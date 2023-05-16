@@ -1,0 +1,8 @@
+python manage.py makemigrations users
+python manage.py migrate --database=users_db  
+
+python manage.py makemigrations products
+python manage.py migrate products --database=products_db
+
+
+python manage.py createsuperuser --database=users_db
